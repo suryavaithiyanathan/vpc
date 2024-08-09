@@ -1,8 +1,3 @@
-variable "sg_list" {
-    type = map(any)
-    description = "Details of the Security Group to allow traffic"
-}
-
 variable "security_groups" {
   type = map(object({
     name        = string
@@ -66,6 +61,52 @@ variable "security_groups" {
           cidr_blocks = ["0.0.0.0/0"]
         }
       ]
+    }
+  }
+}
+##################################################################
+#subnet variable 
+#######################################################################
+
+variable "subnetlist" {
+  type = map(object({
+    cidr_block               = string
+    availability_zone        = string
+    map_public_ip_on_launch  = bool
+    tags                     = map(string)
+  }))
+  default = {
+    "public-subnet-1" = {
+      cidr_block               = "10.0.1.0/24"
+      availability_zone        = "us-west-2a"
+      map_public_ip_on_launch  = true
+      tags                     = {
+        Name = "public-subnet-1"
+      }
+    },
+    "public-subnet-2" = {
+      cidr_block               = "10.0.2.0/24"
+      availability_zone        = "us-west-2b"
+      map_public_ip_on_launch  = true
+      tags                     = {
+        Name = "public-subnet-2"
+      }
+    },
+    "private-subnet-1" = {
+      cidr_block               = "10.0.3.0/24"
+      availability_zone        = "us-west-2a"
+      map_public_ip_on_launch  = false
+      tags                     = {
+        Name = "private-subnet-1"
+      }
+    },
+    "private-subnet-2" = {
+      cidr_block               = "10.0.4.0/24"
+      availability_zone        = "us-west-2b"
+      map_public_ip_on_launch  = false
+      tags                     = {
+        Name = "private-subnet-2"
+      }
     }
   }
 }
